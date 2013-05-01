@@ -1,0 +1,3 @@
+[submodule "client"]
+	path = client
+	url = git@github.com:39dotyt/who-is-absent-today-client.git
