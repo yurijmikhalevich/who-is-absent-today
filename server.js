@@ -1,6 +1,7 @@
 var express = require('express')
     , path = require('path')
     , MongoClient = require('mongodb').MongoClient
+    , ObjectId = require('mongodb').ObjectID
     , app = express()
     , db;
 
@@ -22,15 +23,20 @@ app.post('/students/insert/', function(req, res) {
 });
 
 app.post('/students/remove/', function(req, res) {
-    db.collection('students').findAndRemove({'_id' : req.query.id}, [['_id', 'asc']], function(err, items) {
-        res.send(items[0]);
-    });
+    db.collection('students').findAndRemove({'_id' : ObjectId(req.query.id)}, [['_id', 'asc']], {'safe' : true},
+        function(err, item) {
+            res.send(item);
+        }
+    );
 });
 
 app.post('/students/update/', function(req, res) {
-    db.collection('students').update({'_id' : req.query.id}, {'name' : req.query.name}, function(err, count){
-        res.send(count);
-    });
+    db.collection('students').update({'_id' : ObjectId(req.query.id)}, {'name' : req.query.name},
+        {'safe' : true},
+        function(err, count) {
+            res.send(count.toString());
+        }
+    );
 });
 
 app.get('/students/', function(req, res) {
@@ -38,5 +44,10 @@ app.get('/students/', function(req, res) {
         res.send(items);
     });
 });
+
+//Also we should store and show attendance, there are next methods for that:
+//
+//    [POST] /attendance/save/?date=<ISO-format-wihout-time>&present=<student1_id>,<student2_id> (all checked students in list)
+//    [GET] /attendance/[?date=<ISO-format-withou-time>] (if no date, will be used current day). Response will be in next format: ["<student1_id>", "<studnet2_id>, …].
 
 app.listen(3000);
