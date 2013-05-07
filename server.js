@@ -47,13 +47,10 @@ app.get('/students/', function(req, res) {
 });
 
 app.post('/attendance/save/', function(req, res) {
-  var attendance = {};
-  if (req.body.date) {
-    attendance._id = req.body.date;
-  } else {
-    attendance._id = new Date().toISOString().substring(0, 10);
-  }
-  attendance.present = [];
+  var attendance = {
+    _id : req.body.date,
+    present : []
+  };
   var splitted_present = req.body.present.split(',');
   for (var i = 0; i < splitted_present.length; ++i) {
     attendance.present.push(new ObjectId(splitted_present[i]));
@@ -64,9 +61,8 @@ app.post('/attendance/save/', function(req, res) {
 });
 
 app.get('/attendance/', function(req, res) {
-  db.collection('attendance').findOne(
-      { _id : req.query.date || new Date().toISOString().substring(0, 10) }).toArray(function(err, item) {
-    res.send(item);
+  db.collection('attendance').findOne({ _id : req.query.date }, function(err, item) {
+    res.send(item || { present : [] });
   });
 });
 
