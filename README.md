@@ -5,11 +5,11 @@ Demonstration project, written for KubSAU students. Journal of attendance writte
 
 To get application execute:
 
-$ git clone git@github.com:39dotyt/who-is-absent-today.git
-$ cd who-is-absent-today
-$ git submodule update
-$ npm install
+```$ git clone git@github.com:39dotyt/who-is-absent-today.git```
+```$ cd who-is-absent-today```
+```$ git submodule update```
+```$ npm install```
 
 To run application execute (in application directory):
 
-$ node server.js
+```$ node server.js```
