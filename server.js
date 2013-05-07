@@ -1,7 +1,7 @@
 var express = require('express')
   , path = require('path')
   , MongoClient = require('mongodb').MongoClient
-  , ObjectId = require('mongodb').ObjectID
+  , ObjectID = require('mongodb').ObjectID
   , app = express()
   , db;
 
@@ -24,7 +24,7 @@ app.post('/students/insert/', function(req, res) {
 });
 
 app.post('/students/remove/', function(req, res) {
-  db.collection('students').findAndRemove({ _id : new ObjectId(req.body.id) }, [['_id', 'asc']], { safe : true },
+  db.collection('students').findAndRemove({ _id : new ObjectID(req.body.id) }, [['_id', 'asc']], { safe : true },
     function(err, item) {
       res.send(item);
     }
@@ -32,7 +32,7 @@ app.post('/students/remove/', function(req, res) {
 });
 
 app.post('/students/update/', function(req, res) {
-  db.collection('students').update({ _id : new ObjectId(req.body.id) }, { name : req.body.name },
+  db.collection('students').update({ _id : new ObjectID(req.body.id) }, { name : req.body.name },
     { safe : true },
     function(err, count) {
       res.send(count.toString());
