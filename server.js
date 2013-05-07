@@ -51,9 +51,11 @@ app.post('/attendance/save/', function(req, res) {
     _id : req.body.date,
     present : []
   };
-  var splitted_present = req.body.present.split(',');
-  for (var i = 0; i < splitted_present.length; ++i) {
-    attendance.present.push(new ObjectId(splitted_present[i]));
+  if (req.body.present) {
+    var splitted_present = req.body.present.split(',');
+    for (var i = 0; i < splitted_present.length; ++i) {
+      attendance.present.push(new ObjectId(splitted_present[i]));
+    }
   }
   db.collection('attendance').save(attendance, { safe : true }, function(err, items) {
     res.send(items.toString());
