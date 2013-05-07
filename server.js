@@ -32,7 +32,7 @@ app.post('/students/remove/', function(req, res) {
 });
 
 app.post('/students/update/', function(req, res) {
-  db.collection('students').update({ _id : new ObjectId(req.body.id) }, { name : req.query.name },
+  db.collection('students').update({ _id : new ObjectId(req.body.id) }, { name : req.body.name },
     { safe : true },
     function(err, count) {
       res.send(count.toString());
