@@ -8,7 +8,7 @@ To setup application execute:
 ```bash
 $ git clone git@github.com:39dotyt/who-is-absent-today.git
 $ cd who-is-absent-today
-$ git submodule update
+$ git submodule update --init
 $ npm install
 ```
 
